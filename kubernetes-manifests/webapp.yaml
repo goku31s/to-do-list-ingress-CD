@@ -19,16 +19,16 @@ spec:
         app: webapp
     spec:
       containers:
-      - name: webapp
-        # IMPORTANT: Replace this with the path to YOUR image in Artifact Registry
-        image: IMAGE_PLACEHOLDER
-        ports:
-        - containerPort: 8080
-        env:
-          # This environment variable tells the app how to connect to the database.
-          # 'mongo-service' is the name of the Kubernetes Service we created in mongo.yaml
-        - name: MONGO_URI
-          value: "mongodb://mongo-service:27017/"
+        - name: webapp
+          # IMPORTANT: Replace this with the path to YOUR image in Artifact Registry
+          image: goku431/3-tier-todo-app:fef904dca26d536a085cd83a173d3c3b3dcb3f01
+          ports:
+            - containerPort: 8080
+          env:
+            # This environment variable tells the app how to connect to the database.
+            # 'mongo-service' is the name of the Kubernetes Service we created in mongo.yaml
+            - name: MONGO_URI
+              value: "mongodb://mongo-service:27017/"
 ---
 # --- Webapp Service (Load Balancer) ---
 # This exposes our webapp to the internet using a Google Cloud Load Balancer.
@@ -41,6 +41,9 @@ spec:
   selector:
     app: webapp
   ports:
-  - protocol: TCP
-    port: 80 # The port clients will connect to (e.g., http://EXTERNAL_IP)
-    targetPort: 8080 # The port the container is listening on
+    - protocol: TCP
+      port: 80 # The port clients will connect to (e.g., http://EXTERNAL_IP)
+      targetPort: 8080 # The port the container is listening on
+  template:
+    spec:
+      containers: []
