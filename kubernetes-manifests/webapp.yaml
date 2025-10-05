@@ -21,7 +21,7 @@ spec:
       containers:
         - name: webapp
           # IMPORTANT: Replace this with the path to YOUR image in Artifact Registry
-          image: goku431/3-tier-todo-app:839a72b1c8b7944842f97b96ca3c9d486423bcfb
+          image: goku431/3-tier-todo-app:a4eae72dd0a07f8106360f919911a38a3cebbe81
           ports:
             - containerPort: 8080
           env:
@@ -44,4 +44,6 @@ spec:
     - protocol: TCP
       port: 80 # The port clients will connect to (e.g., http://EXTERNAL_IP)
       targetPort: 8080 # The port the container is listening on
-
+  template:
+    spec:
+      containers: []
