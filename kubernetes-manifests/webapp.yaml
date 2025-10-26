@@ -21,7 +21,7 @@ spec:
       containers:
         - name: webapp
           # IMPORTANT: Replace this with the path to YOUR image in Artifact Registry
-          image: goku431/3-tier-todo-app:e846f4c27409163fc586e5ffaefc7407367ea76c
+          image: goku431/3-tier-todo-app:1cda60c507c7fc57c4075883d78f0a5938128f82
           ports:
             - containerPort: 8080
           env:
@@ -36,11 +36,13 @@ kind: Service
 metadata:
   name: webapp-service
 spec:
-  type: ClusterIP 
+  type: ClusterIP
   selector:
     app: webapp
   ports:
-  - protocol: TCP
-    port: 80 # The Ingress will send traffic to this port
-    targetPort: 8080 # The container is listening on this port
-
+    - protocol: TCP
+      port: 80 # The Ingress will send traffic to this port
+      targetPort: 8080 # The container is listening on this port
+  template:
+    spec:
+      containers: []
