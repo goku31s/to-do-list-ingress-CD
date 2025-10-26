@@ -30,20 +30,17 @@ spec:
             - name: MONGO_URI
               value: "mongodb://mongo-service:27017/"
 ---
-# --- Webapp Service (Load Balancer) ---
-# This exposes our webapp to the internet using a Google Cloud Load Balancer.
+# --- Webapp Service 
 apiVersion: v1
 kind: Service
 metadata:
   name: webapp-service
 spec:
-  type: LoadBalancer # This is what makes it public!
+  type: ClusterIP 
   selector:
     app: webapp
   ports:
-    - protocol: TCP
-      port: 80 # The port clients will connect to (e.g., http://EXTERNAL_IP)
-      targetPort: 8080 # The port the container is listening on
-  template:
-    spec:
-      containers: []
+  - protocol: TCP
+    port: 80 # The Ingress will send traffic to this port
+    targetPort: 8080 # The container is listening on this port
+
